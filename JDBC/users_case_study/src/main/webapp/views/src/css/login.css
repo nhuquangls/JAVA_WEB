@@ -1,0 +1,14 @@
+body {
+    background-color: #0d120f;
+}
+.login {
+    width: 500px;
+    background-color: rgb(238, 243, 243);
+    border: 1px solid;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+

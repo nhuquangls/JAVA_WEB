@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.nav-link:hover {
+    font-size: 1.05rem;
+    transition: font-size 0.1s ease-in-out; 
+}
+body {
+    display: flex;
+}
+.header a {
+    height: 50px;
+    color: #8d909d;
+}
+.footer {
+    height: 30px;
+}
+.main {
+    background-color: #edeef1;
+    min-height: calc(100vh - 80px);
+}
+.main .dash-board div {
+    width: 300px;
+}
+.main .id {
+    width: 10%;
+}
+.main .width-15 {
+    width: 15%;
+}
+.main .post .content {
+    height: 30px;
+    overflow: hidden;
+    padding-right: 20px;
+}

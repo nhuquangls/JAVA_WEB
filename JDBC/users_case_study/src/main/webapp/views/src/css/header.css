@@ -1,0 +1,16 @@
+.header {
+    background-color: #0d120f;
+}
+.header .container {
+    height: 100px;
+}
+.header .row, .logo, img{
+    height: 100%;
+}
+body {
+    background-color: #0d120f;
+    
+}
+.header h5 {
+    color: white;
+}

@@ -40,7 +40,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public User selectUser(int id) {
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -108,7 +108,7 @@ public class UserDAO implements IUserDAO {
         String query = SORT_USERS_BY_FIELD + " " + field + " " + type;
 
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             PreparedStatement preparedStatement = connection.prepareStatement(SORT_USERS_BY_FIELD);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
