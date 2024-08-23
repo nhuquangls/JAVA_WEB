@@ -1,6 +1,8 @@
 package org.codegym.bookdemo.dao;
 
+import com.mysql.cj.jdbc.result.UpdatableResultSet;
 import org.codegym.bookdemo.dbconnection.DBConnection;
+import org.codegym.bookdemo.dto.BookDTO;
 import org.codegym.bookdemo.model.Book;
 import org.codegym.bookdemo.model.Category;
 import org.codegym.bookdemo.service.CategoryService;
@@ -19,14 +21,11 @@ public class BookDAO {
     private static final String UPDATE_BOOK = "UPDATE book SET name = ?, description = ?, price = ?, category_id = ? WHERE id = ?";
     private static final String DELETE_BOOK = "DELETE FROM book WHERE id = ?";
     private static final String SELECT_PAGE = "SELECT * FROM book LIMIT ? OFFSET ?";
+    private static final String SELECT_TOTAL = "SELECT COUNT(*) as count FROM book";
     private CategoryService categoryService = new CategoryService();
 
-
-
-
-
-    public List<Book> getAllBooks() {
-        List<Book> books = new ArrayList<>();
+    public List<BookDTO> getAllBooks() {
+        List<BookDTO> books = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -36,8 +35,8 @@ public class BookDAO {
                 String description = resultSet.getString("description");
                 int price = resultSet.getInt("price");
                 int category_id = resultSet.getInt("category_id");
-                Category category = categoryService.getOneCategory(category_id);
-                books.add(new Book(id, name, description, price, category));
+                String category_name = categoryService.getOneCategory(category_id).getName();
+                books.add(new BookDTO(id, name, description, price, category_name));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -45,7 +44,7 @@ public class BookDAO {
         return books;
     }
 
-    public Book getOneBook(int id) {
+    public BookDTO getOneBook(int id) {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ONE)) {
             preparedStatement.setInt(1, id);
@@ -54,15 +53,15 @@ public class BookDAO {
                     String name = resultSet.getString("name");
                     String description = resultSet.getString("description");
                     int price = resultSet.getInt("price");
-                    Category category = null;
+                    String category_name = null;
                     int category_id = 0;
                     try {
                         category_id = Integer.parseInt(resultSet.getString("category_id"));
                     } catch (NumberFormatException e) {
                         System.out.println(e.getMessage());
                     }
-                    if (category_id != 0) category = categoryService.getOneCategory(category_id);
-                    return new Book(id, name, description, price, category);
+                    if (category_id != 0) category_name = categoryService.getOneCategory(category_id).getName();
+                    return new BookDTO(id, name, description, price, category_name);
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -110,8 +109,8 @@ public class BookDAO {
         }
     }
 
-    public List<Book> getBooksByPage(int quantity, int offset) {
-        List<Book> books = new ArrayList<>();
+    public List<BookDTO> getBooksByPage(int quantity, int offset) {
+        List<BookDTO> books = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PAGE)) {
             preparedStatement.setInt(1, quantity);
@@ -123,12 +122,24 @@ public class BookDAO {
                 String description = resultSet.getString("description");
                 int price = resultSet.getInt("price");
                 int category_id = resultSet.getInt("category_id");
-                Category category = categoryService.getOneCategory(category_id);
-                books.add(new Book(id, name, description, price, category));
+                String category_name = categoryService.getOneCategory(category_id).getName();
+                books.add(new BookDTO(id, name, description, price, category_name));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return books;
+    }
+    public int getTotalRecord() {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TOTAL);
+             ResultSet resultSet = preparedStatement.executeQuery()){
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 }

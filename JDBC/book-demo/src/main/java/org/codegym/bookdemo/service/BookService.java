@@ -3,6 +3,7 @@ package org.codegym.bookdemo.service;
 import jakarta.servlet.http.HttpServletRequest;
 import org.codegym.bookdemo.dao.BookDAO;
 import org.codegym.bookdemo.dao.CategoryDAO;
+import org.codegym.bookdemo.dto.BookDTO;
 import org.codegym.bookdemo.model.Book;
 import org.codegym.bookdemo.model.Category;
 
@@ -12,10 +13,10 @@ public class BookService {
     private BookDAO bookDAO = new BookDAO();
     private CategoryService categoryService = new CategoryService();
 
-    public List<Book> getAllBooks() {
+    public List<BookDTO> getAllBooks() {
         return bookDAO.getAllBooks();
     }
-    public Book getBookById(int id) {
+    public BookDTO getBookById(int id) {
         return bookDAO.getOneBook(id);
     }
 
@@ -43,7 +44,7 @@ public class BookService {
         bookDAO.deleteBook(id);
     }
 
-    public List<Book> getBooksByPage(HttpServletRequest request) {
+    public List<BookDTO> getBooksByPage(HttpServletRequest request) {
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -53,4 +54,14 @@ public class BookService {
         return bookDAO.getBooksByPage(quantity, offset);
     }
 
+    public int getTotalRecord() {
+        return bookDAO.getTotalRecord();
+    }
+
+    public int getTotalPage() {
+        int totalRecord = getTotalRecord();
+        int extra = 0;
+        if (totalRecord % 3 != 0) extra = 1;
+        return totalRecord / 3 + extra;
+    }
 }

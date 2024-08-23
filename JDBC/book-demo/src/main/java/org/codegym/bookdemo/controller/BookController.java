@@ -39,6 +39,7 @@ public class BookController extends HttpServlet {
             default:
                 break;
         }
+        request.setAttribute("total", bookService.getTotalPage());
         request.setAttribute("books", bookService.getBooksByPage(request));
         request.getRequestDispatcher("view/book.jsp").forward(request, response);
     }

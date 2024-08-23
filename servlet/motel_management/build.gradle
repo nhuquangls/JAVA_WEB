@@ -23,8 +23,6 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     compileOnly('jakarta.servlet:jakarta.servlet-api:5.0.0')
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.0'
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'

@@ -1,4 +1,4 @@
-package org.codegym.bookdemo.model;
+package org.codegym.bookdemo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +9,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Category {
+public class BookDTO {
     private int id;
     private String name;
+    private String description;
+    private int price;
+    private String category_name;
 
-    public Category(String name) {
-        this.name = name;
-    }
 }
