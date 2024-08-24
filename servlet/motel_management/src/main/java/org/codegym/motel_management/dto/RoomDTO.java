@@ -1,24 +1,15 @@
-package org.codegym.motel_management.model;
+package org.codegym.motel_management.dto;
 
-import java.time.LocalDate;
-
-public class Room {
+public class RoomDTO {
     private int id;
     private String tenantName;
     private String phone;
-    private LocalDate rentalDate;
-    private PaymentType paymentType;
+    private String rentalDate;
+    private String paymentType;
     private String note;
 
-    public Room(int id, String tenantName, String phone, LocalDate rentalDate, PaymentType paymentType, String note) {
+    public RoomDTO(int id, String tenantName, String phone, String rentalDate, String paymentType, String note) {
         this.id = id;
-        this.tenantName = tenantName;
-        this.phone = phone;
-        this.rentalDate = rentalDate;
-        this.paymentType = paymentType;
-        this.note = note;
-    }
-    public Room(String tenantName, String phone, LocalDate rentalDate, PaymentType paymentType, String note) {
         this.tenantName = tenantName;
         this.phone = phone;
         this.rentalDate = rentalDate;
@@ -42,11 +33,11 @@ public class Room {
         this.note = note;
     }
 
-    public PaymentType getPaymentType() {
+    public String getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(PaymentType paymentType) {
+    public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
     }
 
@@ -58,11 +49,11 @@ public class Room {
         this.phone = phone;
     }
 
-    public LocalDate getRentalDate() {
+    public String getRentalDate() {
         return rentalDate;
     }
 
-    public void setRentalDate(LocalDate rentalDate) {
+    public void setRentalDate(String rentalDate) {
         this.rentalDate = rentalDate;
     }
 

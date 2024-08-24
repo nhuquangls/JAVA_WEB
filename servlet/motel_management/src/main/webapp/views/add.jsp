@@ -20,11 +20,11 @@
             <input type="hidden" name="id" value="${room.id}">
             <label>
                 <span>Tên người thuê</span>
-                <input type="text" name="tenantName" required value="${room.tenantName}">
+                <input type="text" name="tenantName" required value="${room.tenantName}" pattern="[A-Za-z]{5,50}" title="5-50 Ký tự chữ cái">
             </label><br>
             <label>
                 <span>Số điện thoại</span>
-                <input type="text" name="phone" required value="${room.phone}">
+                <input type="number" name="phone" required value="${room.phone}" minlength="10" maxlength="10">
             </label><br>
             <label>
                 <span>Ngày thuê</span>
@@ -40,10 +40,12 @@
             </label><br>
             <label>
                 <span>Ghi chú</span>
-                <textarea name="note" cols="30" rows="10"></textarea value="${room.note}">
+                <textarea name="note" cols="30" rows="10" maxlength="200">${room.note}</textarea>
             </label>
             <button type="submit">Submit</button>
+            <br>
         </form>
+        <a href="/motel_rooms"><button>Back</button></a>
     </div>
 </body>
 </html>

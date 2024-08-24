@@ -30,6 +30,7 @@
             </thead>
             <tbody>
                 <c:set var="count" value="1"/>
+                <form id="deleteForm" action="/motel_rooms?action=delete" method="post">
                 <c:forEach var="room" items="${rooms}">
                     <tr>
                         <th scope="row">${count}</th>
@@ -37,20 +38,19 @@
                         <td>${room.tenantName}</td>
                         <td>${room.phone}</td>
                         <td>${room.rentalDate}</td>
-                        <td>${room.paymentType.name}</td>
+                        <td>${room.paymentType}</td>
                         <td>${room.note}</td>
-                        <td>
-                            <form id="deleteForm">
-                                <label>
-                                    <input type="checkbox" name="delete" value="${room.id}">
-                                </label>
-                            </form>
-                        </td>
                         <td>
                             <a href="/motel_rooms?action=edit&id=${room.id}" class="btn btn-primary">Edit</a>
                         </td>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="delete" value="${room.id}">
+                            </label>
+                        </td>
                     </tr>
                 </c:forEach>
+                </form>
             </tbody>
         </table>
         <div class="d-flex justify-content-end"><button class="btn btn-danger w-10" onclick="submitDeleteForm()">Delete</button></div>

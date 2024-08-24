@@ -49,6 +49,10 @@ public class RoomsController extends HttpServlet {
                 roomsService.editRoom(request);
                 response.sendRedirect("/motel_rooms");
                 break;
+            case "delete":
+                roomsService.deleteRooms(request);
+                response.sendRedirect("/motel_rooms");
+                break;
             default:
                 break;
         }

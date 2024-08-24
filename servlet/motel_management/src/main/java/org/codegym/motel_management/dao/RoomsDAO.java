@@ -15,6 +15,7 @@ public class RoomsDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM motel_rooms WHERE id = ?";
     private static final String INSERT_ROOM = "INSERT INTO motel_rooms (tenantName, phone, rentalDate, payment_type_id, note) VALUE (?, ?, ?, ?, ?)";
     private static final String UPDARE_ROOM = "UPDATE motel_rooms SET tenantName = ?, phone = ?, rentalDate = ?, payment_type_id = ?, note = ? WHERE id = ?";
+    private static final String DELETE_ROOM = "delete from motel_rooms where id = ?;";
     PaymentTypeService paymentTypeService = new PaymentTypeService();
 
 
@@ -27,7 +28,7 @@ public class RoomsDAO {
                 int id = resultSet.getInt("id");
                 String tenantName = resultSet.getString("tenantName");
                 String phone = resultSet.getString("phone");
-                Date rentalDate = (Date) resultSet.getObject("rentalDate");
+                LocalDate rentalDate = resultSet.getObject("rentalDate", LocalDate.class);
                 int paymentTypeId = resultSet.getInt("payment_type_id");
                 PaymentType paymentType = paymentTypeService.getPaymentTypeById(paymentTypeId);
                 String note = resultSet.getString("note");
@@ -62,7 +63,7 @@ public class RoomsDAO {
                 if (resultSet.next()) {
                     String tenantName = resultSet.getString("tenantName");
                     String phone = resultSet.getString("phone");
-                    Date rentalDate = (Date) resultSet.getObject("rentalDate");
+                    LocalDate rentalDate = resultSet.getObject("rentalDate", LocalDate.class);
                     int paymentTypeId = resultSet.getInt("payment_type_id");
                     PaymentType paymentType = paymentTypeService.getPaymentTypeById(paymentTypeId);
                     String note = resultSet.getString("note");
@@ -86,6 +87,16 @@ public class RoomsDAO {
             preparedStatement.setInt(4, room.getPaymentType().getId());
             preparedStatement.setString(5, room.getNote());
             preparedStatement.setInt(6, room.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void deleteRoom(int id) {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ROOM)){
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
